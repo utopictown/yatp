@@ -1,8 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
 import { Interest } from './schemas/interest.schema';
 import { InterestsService } from './interests.service';
 import { CreateInterestDto } from './dto/create-interest.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('interests')
 export class InterestsController {
   constructor(private readonly interestService: InterestsService) {}
