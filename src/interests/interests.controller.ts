@@ -19,7 +19,6 @@ export class InterestsController {
 
   @Get('/search')
   async search(@Query('q') query: string): Promise<Interest[]> {
-    console.log(query);
     return this.interestService.search(query);
   }
 
