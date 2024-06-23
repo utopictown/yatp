@@ -21,9 +21,9 @@ export class AuthService {
 
   async signIn(username: string, password: string): Promise<{ access_token: string }> {
     const user = await this.usersService.findOne(username);
-    if (!user) throw new BadRequestException('User not found');
+    if (!user) throw new UnauthorizedException('User not found');
     const checkPassword = await bcrypt.compare(password, user.password);
-    if (!checkPassword) throw new BadRequestException('Wrong password');
+    if (!checkPassword) throw new UnauthorizedException('Wrong password');
     const payload = { sub: user._id, username: user.username };
     return {
       access_token: await this.jwtService.signAsync(payload),

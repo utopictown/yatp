@@ -3,15 +3,15 @@ import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model, UpdateWriteOpResult } from 'mongoose';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { Profile } from './schemas/profile.schema';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
 import { REQUEST } from '@nestjs/core';
-import { AuthenticatedUser } from 'src/auth/dto/authenticated-user.dto';
+import { AuthenticatedUser } from '../auth/dto/authenticated-user.dto';
 
 @Injectable()
 export class ProfilesService {
   constructor(
     @InjectModel(Profile.name) private readonly profileModel: Model<Profile>,
-    private usersService: UsersService,
+    private readonly usersService: UsersService,
     @Inject(REQUEST) private readonly request: Request & { user: AuthenticatedUser },
   ) {}
 

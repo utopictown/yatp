@@ -108,7 +108,7 @@ describe('ProfilesController', () => {
   });
 
   it('should delete a profile', async () => {
-    await controller.delete('profile-id');
-    expect(service.delete).toHaveBeenCalledWith('profile-id');
+    await controller.delete();
+    expect(service.delete).toHaveBeenCalled();
   });
 });

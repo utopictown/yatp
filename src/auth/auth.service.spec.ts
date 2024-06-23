@@ -4,6 +4,7 @@ import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { UnauthorizedException } from '@nestjs/common';
 import mongoose from 'mongoose';
+import * as bcrypt from 'bcrypt';
 
 describe('AuthService', () => {
   let authService: AuthService;
@@ -36,13 +37,15 @@ describe('AuthService', () => {
 
   describe('signIn', () => {
     it('should return access token for valid credentials', async () => {
-      const user = { _id: new mongoose.Types.ObjectId(), username: 'john', email: 'john@mail.com', password: 'password', profile: new mongoose.Types.ObjectId() };
+      const user = { _id: new mongoose.Types.ObjectId(), username: 'john', email: 'john@mail.com', password: 'hashedPassword', profile: new mongoose.Types.ObjectId() };
       jest.spyOn(usersService, 'findOne').mockResolvedValue(user);
       jest.spyOn(jwtService, 'signAsync').mockResolvedValue('access_token');
+      jest.spyOn(bcrypt, 'compare').mockImplementation(() => Promise.resolve(true));
 
       const result = await authService.signIn('john', 'password');
 
       expect(usersService.findOne).toHaveBeenCalledWith('john');
+      expect(bcrypt.compare).toHaveBeenCalledWith('password', 'hashedPassword');
       expect(jwtService.signAsync).toHaveBeenCalledWith({
         sub: user._id,
         username: user.username,
