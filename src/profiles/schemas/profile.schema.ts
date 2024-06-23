@@ -5,7 +5,7 @@ export type ProfileDocument = HydratedDocument<Profile>;
 
 @Schema()
 export class Profile {
-  @Prop({ required: true, unique: true })
+  @Prop()
   _id: mongoose.Types.ObjectId;
 
   @Prop()
