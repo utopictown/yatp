@@ -52,7 +52,7 @@ describe('ProfilesController', () => {
       },
       birthday: new Date(),
       horoscope: 'aries',
-      interest: ['soccer', 'music', 'movie'],
+      interest: [new mongoose.Types.ObjectId(), new mongoose.Types.ObjectId()],
       zodiac: 'goat',
     };
     await controller.create(createProfileDto);

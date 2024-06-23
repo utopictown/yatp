@@ -1,8 +1,9 @@
+import mongoose from 'mongoose';
+
 export type measurement = {
   value: number;
   unit: string;
-}
-
+};
 
 export class CreateProfileDto {
   readonly displayName: string;
@@ -13,5 +14,5 @@ export class CreateProfileDto {
   readonly zodiac: string;
   readonly height: measurement;
   readonly weight: measurement;
-  readonly interest: string[]
+  readonly interest: mongoose.Types.ObjectId[];
 }
