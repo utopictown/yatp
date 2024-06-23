@@ -5,7 +5,6 @@ export type UserDocument = HydratedDocument<User>;
 
 @Schema()
 export class User {
-  @Prop()
   _id: mongoose.Types.ObjectId;
 
   @Prop()
@@ -17,7 +16,7 @@ export class User {
   @Prop()
   password: string;
 
-  @Prop({ type: [mongoose.Types.ObjectId], ref: 'Profile', required: false })
+  @Prop({ type: mongoose.Types.ObjectId, ref: 'Profile', required: false })
   profile: mongoose.Types.ObjectId;
 }
 

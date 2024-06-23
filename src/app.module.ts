@@ -8,10 +8,7 @@ import { UsersModule } from './users/users.module';
 import { InterestsModule } from './interests/interests.module';
 
 @Module({
-  imports: [
-    MongooseModule.forRoot('mongodb://admin:123456@localhost/yatp?authSource=admin'), 
-    ProfilesModule, AuthModule, UsersModule, InterestsModule
-  ],
+  imports: [MongooseModule.forRoot('mongodb://admin:123456@localhost/yatp?authSource=admin'), ProfilesModule, AuthModule, UsersModule, InterestsModule],
   controllers: [AppController],
   providers: [AppService],
 })

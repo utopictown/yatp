@@ -5,7 +5,6 @@ export type InterestDocument = HydratedDocument<Interest>;
 
 @Schema()
 export class Interest {
-  @Prop()
   _id: mongoose.Types.ObjectId;
 
   @Prop({ type: String, required: true, index: true })

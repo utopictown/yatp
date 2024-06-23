@@ -24,8 +24,8 @@ export class ProfilesController {
     return this.profilesService.findOne(id);
   }
 
-  @Delete(':id')
-  async delete(@Param('id') id: string) {
-    return this.profilesService.delete(id);
+  @Delete()
+  async delete() {
+    return this.profilesService.delete();
   }
 }
