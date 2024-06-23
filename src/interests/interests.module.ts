@@ -7,6 +7,6 @@ import { Interest, InterestSchema } from './schemas/interest.schema';
 @Module({
   imports: [MongooseModule.forFeature([{ name: Interest.name, schema: InterestSchema }])],
   controllers: [InterestsController],
-  providers: [InterestsService]
+  providers: [InterestsService],
 })
 export class InterestsModule {}

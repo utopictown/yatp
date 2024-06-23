@@ -3,6 +3,8 @@ import { ProfilesController } from './profiles.controller';
 import { ProfilesService } from './profiles.service';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { Profile } from './schemas/profile.schema';
+import mongoose from 'mongoose';
+import { JwtService } from '@nestjs/jwt';
 
 describe('ProfilesController', () => {
   let controller: ProfilesController;
@@ -21,6 +23,13 @@ describe('ProfilesController', () => {
             delete: jest.fn(),
           },
         },
+        {
+          provide: JwtService,
+          useValue: {
+            sign: jest.fn(),
+            verify: jest.fn(),
+          },
+        },
       ],
     }).compile();
 
@@ -35,16 +44,16 @@ describe('ProfilesController', () => {
       gender: 'male',
       height: {
         value: 180,
-        unit: 'cm'
+        unit: 'cm',
       },
       weight: {
         value: 70,
-        unit: 'kg'
+        unit: 'kg',
       },
-      birthday: new Date(), 
-      horoscope: 'aries', 
+      birthday: new Date(),
+      horoscope: 'aries',
       interest: ['soccer', 'music', 'movie'],
-      zodiac: 'goat' 
+      zodiac: 'goat',
     };
     await controller.create(createProfileDto);
     expect(service.create).toHaveBeenCalledWith(createProfileDto);
@@ -53,21 +62,22 @@ describe('ProfilesController', () => {
   it('should return an array of profiles', async () => {
     const profiles: Profile[] = [
       {
+        _id: new mongoose.Types.ObjectId(),
         displayName: 'John Doe',
         avatarSrc: 'https://example.com/avatar.jpg',
         gender: 'male',
         height: {
           value: 180,
-          unit: 'cm'
+          unit: 'cm',
         },
         weight: {
           value: 70,
-          unit: 'kg'
+          unit: 'kg',
         },
-        birthday: new Date(), 
-        horoscope: 'aries', 
-        interest: ['soccer', 'music', 'movie'],
-        zodiac: 'goat' 
+        birthday: new Date(),
+        horoscope: 'aries',
+        interest: [new mongoose.Types.ObjectId(), new mongoose.Types.ObjectId()],
+        zodiac: 'goat',
       },
     ];
     jest.spyOn(service, 'findAll').mockResolvedValue(profiles);
@@ -76,21 +86,22 @@ describe('ProfilesController', () => {
 
   it('should return a profile by id', async () => {
     const profile: Profile = {
+      _id: new mongoose.Types.ObjectId(),
       displayName: 'John Doe',
       avatarSrc: 'https://example.com/avatar.jpg',
       gender: 'male',
       height: {
         value: 180,
-        unit: 'cm'
+        unit: 'cm',
       },
       weight: {
         value: 70,
-        unit: 'kg'
+        unit: 'kg',
       },
-      birthday: new Date(), 
-      horoscope: 'aries', 
-      interest: ['soccer', 'music', 'movie'],
-      zodiac: 'goat' 
+      birthday: new Date(),
+      horoscope: 'aries',
+      interest: [new mongoose.Types.ObjectId(), new mongoose.Types.ObjectId()],
+      zodiac: 'goat',
     };
     jest.spyOn(service, 'findOne').mockResolvedValue(profile);
     expect(await controller.findOne('profile-id')).toBe(profile);

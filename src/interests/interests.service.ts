@@ -27,7 +27,9 @@ export class InterestsService {
   }
 
   async delete(id: string) {
-    const deletedProfile = await this.interestModel.findByIdAndDelete({ _id: id });
+    const deletedProfile = await this.interestModel.findByIdAndDelete({
+      _id: id,
+    });
     return deletedProfile;
   }
 }
