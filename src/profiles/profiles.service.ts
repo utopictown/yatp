@@ -6,6 +6,8 @@ import { Profile } from './schemas/profile.schema';
 import { UsersService } from '../users/users.service';
 import { REQUEST } from '@nestjs/core';
 import { AuthenticatedUser } from '../auth/dto/authenticated-user.dto';
+import getHoroscope from 'src/utils/get-horoscope';
+import getChineseZodiac from 'src/utils/get-zodiac';
 
 @Injectable()
 export class ProfilesService {
@@ -27,8 +29,8 @@ export class ProfilesService {
       avatarSrc: createProfileDto.avatarSrc,
       gender: createProfileDto.gender,
       birthday: createProfileDto.birthday,
-      horoscope: createProfileDto.horoscope,
-      zodiac: createProfileDto.zodiac,
+      horoscope: getChineseZodiac(createProfileDto.birthday),
+      zodiac: getHoroscope(createProfileDto.birthday),
       height: createProfileDto.height,
       weight: createProfileDto.weight,
       interest: createProfileDto.interest,
