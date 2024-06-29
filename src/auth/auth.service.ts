@@ -12,11 +12,18 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signUp({ email, username, password }: SignUpDto): Promise<User> {
+  async signUp({ email, username, password }: SignUpDto): Promise<Omit<User, 'password'>> {
     const user = await this.usersService.findOneByEmailOrUsername({ email, username });
     if (user) throw new BadRequestException('User already exists');
     const hashedPassword = await bcrypt.hash(password, 10);
-    return this.usersService.create({ email, username, password: hashedPassword });
+    const newUser = await this.usersService.create({ email, username, password: hashedPassword });
+    const createdUser = {
+      _id: newUser._id,
+      username: newUser.username,
+      email: newUser.email,
+      profile: null,
+    };
+    return createdUser;
   }
 
   async signIn(username: string, password: string): Promise<{ access_token: string }> {
